@@ -13,13 +13,13 @@ public class CurveUtil
         // return data
         List<CurveValueData> curveValueDatas;
 
-        var exist = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.x" && binding.path == name).ToArray().Count() > 0;
+        var exist = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.x" && matchName(binding.path, name)).ToArray().Count() > 0;
         if (exist)
         {
-            var binding_x = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.x" && binding.path == name).ToArray().First();
-            var binding_y = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.y" && binding.path == name).ToArray().First();
-            var binding_z = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.z" && binding.path == name).ToArray().First();
-            var binding_w = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.w" && binding.path == name).ToArray().First();
+            var binding_x = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.x" && matchName(binding.path, name)).ToArray().First();
+            var binding_y = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.y" && matchName(binding.path, name)).ToArray().First();
+            var binding_z = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.z" && matchName(binding.path, name)).ToArray().First();
+            var binding_w = curveBindings.Where(binding => binding.propertyName == "m_LocalRotation.w" && matchName(binding.path, name)).ToArray().First();
 
             // get every curve
             var curveX = AnimationUtility.GetEditorCurve(clip, binding_x);
@@ -54,5 +54,12 @@ public class CurveUtil
             curveValueDatas = null;
         }
         return curveValueDatas;
+    }
+
+    private static bool matchName(string path, string name)
+    {
+        // pass only my item
+        var pathItems = path.Split('/');
+        return pathItems[pathItems.Length - 1] == name;
     }
 }
