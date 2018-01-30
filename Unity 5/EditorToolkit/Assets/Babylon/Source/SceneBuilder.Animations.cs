@@ -254,7 +254,7 @@ namespace Unity3D2Babylon
                         //var outTangent = curveDataItems[i].getOutTangentArray();
 
                         var babylonAnimationKey = new BabylonAnimationKey();
-                        babylonAnimationKey.frame = (int)(time * clip.frameRate);
+                        babylonAnimationKey.frame = (int)Math.Round(time * clip.frameRate);
                         babylonAnimationKey.values = values;
                         
                         keys.Add(babylonAnimationKey);
@@ -273,7 +273,7 @@ namespace Unity3D2Babylon
 
                     babylonAnimation.keys = curve.keys.Select(keyFrame => new BabylonAnimationKey
                     {
-                        frame = (int)(keyFrame.time * clip.frameRate),
+                        frame = (int)Math.Round(keyFrame.time * clip.frameRate),
                         values = new[] { isLocalEulerAnglesRaw ? keyFrame.value * (float)Math.PI / 180 : keyFrame.value
                         // we use merged array
                         ,keyFrame.inTangent * ratio,
